@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // MAZE PROC GEN LAB
 // all students: complete steps 1-6, as listed in this file
@@ -9,7 +11,8 @@ using UnityEngine;
 // STEP 1: ======================================================================================
 // put this script on a Sphere... it will move around, and drop a path of floor tiles behind it
 
-public class Pathmaker : MonoBehaviour {
+public class Pathmaker : MonoBehaviour
+{
 
 // STEP 2: ============================================================================================
 // translate the pseudocode below
@@ -19,8 +22,221 @@ public class Pathmaker : MonoBehaviour {
 //	Declare a public Transform called floorPrefab, assign the prefab in inspector;
 //	Declare a public Transform called pathmakerSpherePrefab, assign the prefab in inspector; 		// you'll have to make a "pathmakerSphere" prefab later
 
+	public int counter;
+	public int tileCounter;
+	
+	public Transform floor1Prefab;
+	public Transform floor2Prefab;
+	public Transform floor3Prefab;
+	public Transform floor4Prefab;
+	public Transform floor5Prefab;
 
-	void Update () {
+	public Transform pathmakerSpherePrefab;
+	public static int globalTileCount;
+
+	public bool shortLife;
+	public bool noTurns;
+
+	void Start()
+	{
+		float lifeTime = Random.Range(0f, 1f);
+		if (lifeTime < .5f)
+		{
+			shortLife = true;
+		}
+		else
+		{
+			shortLife = false;
+		}
+
+		float willTurn = Random.Range(0f, 1f);
+		if (willTurn < .9f)
+		{
+			noTurns = false;
+		}
+		else
+		{
+			noTurns = true;
+		}
+	}
+
+	void Update()
+	{
+		tileCounter = Random.Range(1, 5);
+		
+		if (noTurns == true)
+		{
+			if (counter < 50)
+			{
+				float rand = Random.Range(0f, 1f);
+				if (rand >= .8f && rand <= 1f)
+				{
+					Instantiate(pathmakerSpherePrefab,
+						new Vector3(transform.position.x, transform.position.y, transform.position.z),
+						Quaternion.Euler(0f, 0f, 0f));
+
+				}
+
+				if (tileCounter == 1)
+				{
+					Instantiate(floor1Prefab, new Vector3(transform.position.x, transform.position.y, transform.position.z),
+						Quaternion.Euler(0f, 0f, 0f));
+				}
+				if (tileCounter == 2)
+				{
+					Instantiate(floor2Prefab, new Vector3(transform.position.x, transform.position.y, transform.position.z),
+						Quaternion.Euler(0f, 0f, 0f));
+				}
+				if (tileCounter == 3)
+				{
+					Instantiate(floor3Prefab, new Vector3(transform.position.x, transform.position.y, transform.position.z),
+						Quaternion.Euler(0f, 0f, 0f));
+				}
+				if (tileCounter == 4)
+				{
+					Instantiate(floor4Prefab, new Vector3(transform.position.x, transform.position.y, transform.position.z),
+						Quaternion.Euler(0f, 0f, 0f));
+				}
+				if (tileCounter == 5)
+				{
+					Instantiate(floor5Prefab, new Vector3(transform.position.x, transform.position.y, transform.position.z),
+						Quaternion.Euler(0f, 0f, 0f));
+				}
+				
+				globalTileCount += 1;
+				transform.Translate(0f, 0f, 5f);
+				counter += 1;
+			}
+			else
+			{
+				Destroy(gameObject);
+			}
+		}
+
+		if (shortLife == true)
+		{
+			if (counter < 100)
+			{
+				float rand = Random.Range(0f, 1f);
+				if (rand < .04f)
+				{
+					transform.Rotate(0f, 90f, 0f);
+				}
+				else if (rand >= .65f && rand <= .69f)
+				{
+					transform.Rotate(0f, -90f, 0f);
+				}
+				else if (rand >= .95f && rand <= 1f)
+				{
+					Instantiate(pathmakerSpherePrefab,
+						new Vector3(transform.position.x, transform.position.y, transform.position.z),
+						Quaternion.Euler(0f, 0f, 0f));
+
+				}
+
+				if (tileCounter == 1)
+				{
+					Instantiate(floor1Prefab, new Vector3(transform.position.x, transform.position.y, transform.position.z),
+						Quaternion.Euler(0f, 0f, 0f));
+				}
+				if (tileCounter == 2)
+				{
+					Instantiate(floor2Prefab, new Vector3(transform.position.x, transform.position.y, transform.position.z),
+						Quaternion.Euler(0f, 0f, 0f));
+				}
+				if (tileCounter == 3)
+				{
+					Instantiate(floor3Prefab, new Vector3(transform.position.x, transform.position.y, transform.position.z),
+						Quaternion.Euler(0f, 0f, 0f));
+				}
+				if (tileCounter == 4)
+				{
+					Instantiate(floor4Prefab, new Vector3(transform.position.x, transform.position.y, transform.position.z),
+						Quaternion.Euler(0f, 0f, 0f));
+				}
+				if (tileCounter == 5)
+				{
+					Instantiate(floor5Prefab, new Vector3(transform.position.x, transform.position.y, transform.position.z),
+						Quaternion.Euler(0f, 0f, 0f));
+				}
+				globalTileCount += 1;
+
+				transform.Translate(0f, 0f, 5f);
+
+				counter += 1;
+			}
+			else
+			{
+				Destroy(gameObject);
+			}
+		}
+
+		if (shortLife == false)
+		{
+			if (counter < 200)
+			{
+				float rand = Random.Range(0f, 1f);
+				if (rand < .04f)
+				{
+					transform.Rotate(0f, 90f, 0f);
+				}
+				else if (rand >= .65f && rand <= .69f)
+				{
+					transform.Rotate(0f, -90f, 0f);
+				}
+				else if (rand >= .95f && rand <= 1f)
+				{
+					Instantiate(pathmakerSpherePrefab,
+						new Vector3(transform.position.x, transform.position.y, transform.position.z),
+						Quaternion.Euler(0f, 0f, 0f));
+
+				}
+
+				if (tileCounter == 1)
+				{
+					Instantiate(floor1Prefab, new Vector3(transform.position.x, transform.position.y, transform.position.z),
+						Quaternion.Euler(0f, 0f, 0f));
+				}
+				if (tileCounter == 2)
+				{
+					Instantiate(floor2Prefab, new Vector3(transform.position.x, transform.position.y, transform.position.z),
+						Quaternion.Euler(0f, 0f, 0f));
+				}
+				if (tileCounter == 3)
+				{
+					Instantiate(floor3Prefab, new Vector3(transform.position.x, transform.position.y, transform.position.z),
+						Quaternion.Euler(0f, 0f, 0f));
+				}
+				if (tileCounter == 4)
+				{
+					Instantiate(floor4Prefab, new Vector3(transform.position.x, transform.position.y, transform.position.z),
+						Quaternion.Euler(0f, 0f, 0f));
+				}
+				if (tileCounter == 5)
+				{
+					Instantiate(floor5Prefab, new Vector3(transform.position.x, transform.position.y, transform.position.z),
+						Quaternion.Euler(0f, 0f, 0f));
+				}
+				globalTileCount += 1;
+
+				transform.Translate(0f, 0f, 5f);
+
+				counter += 1;
+			}
+			else
+			{
+				Destroy(gameObject);
+			}
+		}
+
+		if (globalTileCount > 5000)
+		{
+			Destroy(gameObject);
+		}
+	}
+}
+
+
 //		If counter is less than 50, then:
 //			Generate a random number from 0.0f to 1.0f;
 //			If random number is less than 0.25f, then rotate myself 90 degrees;
@@ -33,9 +249,9 @@ public class Pathmaker : MonoBehaviour {
 //			Increment counter;
 //		Else:
 //			Destroy my game object; 		// self destruct if I've made enough tiles already
-	}
 
-} // end of class scope
+
+// end of class scope
 
 // MORE STEPS BELOW!!!........
 
